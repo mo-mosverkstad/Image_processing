@@ -58,6 +58,11 @@ function colorProcAnalysis() {
 }
 
 
+function compress() {
+    imageProcess(imageCompress, imageOrigData, {x:imgOrignal.naturalWidth+border*3+dataShowWidth*2, y:0});
+    imageProcData = loadData(imgOrignal.naturalWidth+border*3+dataShowWidth*2, 0, imgOrignal.naturalWidth, imgOrignal.naturalHeight);
+}
+
 
 
 function colorScatter(data, x) {

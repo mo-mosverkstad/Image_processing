@@ -20,6 +20,15 @@ function imageSqrt(imageData) {
 }
 
 function sqrt(value) {
-    result = Math.min(Math.round(Math.sqrt(value))*15, 255);
+    result = Math.min((Math.round(Math.sqrt(value))*1)**2, 255);
     return result;
+}
+
+function imageCompress(imageData) {
+    return {r:compressTo8(imageData.r), g:compressTo8(imageData.g), b:compressTo8(imageData.b)};
+}
+
+function compressTo8(value) {
+    index = 256/8;
+    return Math.round(value / index)*index+(index/2-1);
 }
