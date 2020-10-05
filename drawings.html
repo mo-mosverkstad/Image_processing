@@ -19,17 +19,8 @@ button {
 </head>
 <body>
 
-<p>Image Processing:</p>
-<canvas id="imageProcessCanvas" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.
-</canvas>
-
-<script src="frameworkDrawings.js"></script>
-<script src="frameworkAnalysis.js"></script>
-<script src="frameworkProcess.js"></script>
-<script src="main.js"></script>
-
-
+<p>Select a picture:</p>
+<input type='file' id="fileUpload" style="width: 100%"/>
 
 <div class="container">
     <button>-</button>
@@ -51,5 +42,19 @@ Your browser does not support the HTML5 canvas tag.
     <button onclick="colorProcScatter()">Color Scattering</button>
     <button onclick="colorProcAnalysis()">Analysis</button>
 </div>
+
+<p>Image Processing:</p>
+<canvas id="imageProcessCanvas" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script src="frameworkPosition.js"></script>
+<script src="frameworkDrawings.js"></script>
+<script src="frameworkAnalysis.js"></script>
+<script src="frameworkProcess.js"></script>
+<script src="main.js"></script>
+
+
+
 </body>
 </html>

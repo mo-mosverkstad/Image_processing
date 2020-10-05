@@ -1,3 +1,9 @@
+function loadData(x, y, w, h) {
+    return {width : w,
+            height: h,
+            data  : getImageData({x:x, y:y, width:w, height:h})};
+}
+
 function getImageData(pickArea) {
     var tempArray = [];
     for (j=0; j<pickArea.height; j++) {

@@ -1,3 +1,5 @@
+var maxColorValue = 256;
+
 function statisData(imageData) {
     var tempRedArray   = [];
     var tempGreenArray = [];
@@ -27,19 +29,23 @@ function calPercent(tempArray, total) {
     return tempArray;
 }
 
-function showHistogram(x, y, c, dataShowArray) {
-    fillArea(x, y, dataShowWidth, dataShowHeight, 255, 255, 255);
-    for (i=0; i<maxColorValue; i++) {
-        switch (c) {
-            case 0:
-                drawHorizonLine(x, y+i, dataShowArray[i], i, 0, 0);
-                break;
-            case 1:
-                drawHorizonLine(x, y+i, dataShowArray[i], 0, i, 0);
-                break;
-            case 2:
-                drawHorizonLine(x, y+i, dataShowArray[i], 0, 0, i);
-                break;
+
+function showHistogram(x, histogramArray) {
+    for (c=0; c<3; c++) {
+        pos = canvasPosition.getHistogramPosition(x, c);
+        fillArea(pos.x, pos.y, canvasPosition.gethistogramSize().w, canvasPosition.gethistogramSize().h, 255, 255, 255);
+        for (i=0; i<maxColorValue; i++) {
+            switch (c) {
+                case 0:
+                    drawHorizonLine(pos.x, pos.y+i, histogramArray.r[i], i, 0, 0);
+                    break;
+                case 1:
+                    drawHorizonLine(pos.x, pos.y+i, histogramArray.g[i], 0, i, 0);
+                    break;
+                case 2:
+                    drawHorizonLine(pos.x, pos.y+i, histogramArray.b[i], 0, 0, i);
+                    break;
+            }
         }
     }
 }
