@@ -1,5 +1,11 @@
-var ctx = document.getElementById("imageProcessCanvas").getContext("2d");
+var canvas = document.getElementById("imageProcessCanvas");
+var ctx = canvas.getContext("2d");
+var hiddenCanvas = document.getElementById('outputCanvas');
+var hiddenCtx = hiddenCanvas.getContext('2d');
+hiddenCanvas.style.display = 'none';
+
 var fileUpload = document.getElementById('fileUpload');
+var fileUploadRight = document.getElementById('fileUploadRight');
 
 var imageOrigData;
 var imageProcData;
@@ -23,23 +29,57 @@ function readImage() {
 }
 fileUpload.onchange = readImage;
 
-function imageProcessGeneralFunction(func) {
+
+var imgRight = new Image();
+
+function readImageRight() {
+    if ( this.files && this.files[0] ) {
+        var fr= new FileReader();
+        fr.onload = function(e) {
+            imgRight.src = e.target.result;
+            imgRight.onload = function() {
+                pos = canvasPosition.getImagePosition(1, 0);
+                ctx.drawImage(imgRight, pos.x, pos.y, imgRight.naturalWidth, imgRight.naturalHeight);
+                imageProcData  = loadData(pos.x, pos.y, imgRight.naturalWidth, imgRight.naturalHeight);
+           };
+        };       
+        fr.readAsDataURL( this.files[0] );
+    }
+}
+fileUploadRight.onchange = readImageRight;
+
+
+
+function imageProcessGeneralFunction(ipFunc, func) {
     pos = canvasPosition.getImagePosition(1, 0);
-    imageProcess(func, imageOrigData, pos);
+    ipFunc(func, imageOrigData, pos);
     imageProcData = loadData(pos.x, pos.y, imgOrignal.naturalWidth, imgOrignal.naturalHeight);
 }
 
 function makeSqrt() {
-    imageProcessGeneralFunction(imageSqrt);
+    imageProcessGeneralFunction(imageProcess, imageSqrt);
 }
 
 function grayScale() {
-    imageProcessGeneralFunction(imageGray);
+    imageProcessGeneralFunction(imageProcess, imageGray);
 }
 
 function compress() {
-    imageProcessGeneralFunction(imageCompress);
+    imageProcessGeneralFunction(imageProcess, imageCompress);
 }
+
+function soften() {
+    imageProcessGeneralFunction(imageProcess2, imageSoften);
+}
+
+function sharpen() {
+    imageProcessGeneralFunction(imageProcess2, imageSharpen);
+}
+
+function edge() {
+    imageProcessGeneralFunction(imageProcess2, imageEdge);
+}
+
 
 
 
@@ -74,3 +114,24 @@ function colorProcAnalysis() {
     }
 }
 
+
+
+function generateOutputImg() {
+    var pos = canvasPosition.getImagePosition(1, 0);
+    var x = pos.x;
+    var y = pos.y;
+    var w = imageOrigData.width;
+    var h = imageOrigData.height;
+    
+    hiddenCtx.clearRect(0, 0, hiddenCanvas.width, hiddenCanvas.height);
+    hiddenCanvas.width = w;
+    hiddenCanvas.height = h;
+    
+    //Draw the data you want to download to the hidden canvas
+    hiddenCtx.drawImage(canvas, x, y, w, h, 0, 0, w, h);
+    
+    //Create a download URL for the data
+    var hiddenData = hiddenCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    var dataURL = hiddenCanvas.toDataURL();
+    document.getElementById('outputImg').src = dataURL;
+}
