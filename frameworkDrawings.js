@@ -35,6 +35,23 @@ function imageProcess2(imageProcessFunction2, imageData, startPoint) {
     }
 }
 
+function imageProcessArray(imageProcessFunctionArray, imageData, startPoint) {
+    for (j=1; j<imageData.height-1; j++) {
+        for (i=1; i<imageData.width-1; i++) {
+            color = imageProcessFunctionArray([imageData.data[j-1][i-1],
+                                               imageData.data[j-1][i  ],
+                                               imageData.data[j-1][i+1],
+                                               imageData.data[j  ][i-1],
+                                               imageData.data[j  ][i  ],
+                                               imageData.data[j  ][i+1],
+                                               imageData.data[j+1][i-1],
+                                               imageData.data[j+1][i  ],
+                                               imageData.data[j+1][i+1]]);
+            putPoint(startPoint.x + i, startPoint.y + j, [color.r, color.g, color.b]);
+        }
+    }
+}
+
 
 function convertArrayToDict(imageDataArray) {
     return {r:imageDataArray[0], g:imageDataArray[1], b:imageDataArray[2]};

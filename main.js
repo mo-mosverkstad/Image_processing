@@ -80,6 +80,14 @@ function edge() {
     imageProcessGeneralFunction(imageProcess2, imageEdge);
 }
 
+function medianFilter() {
+    imageProcessGeneralFunction(imageProcessArray, imageMedianFilter);
+}
+
+function valueFilter() {
+    imageProcessGeneralFunction(imageProcess, imageValueFilter);
+}
+
 
 
 
