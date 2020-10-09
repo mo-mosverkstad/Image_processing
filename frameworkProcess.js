@@ -34,26 +34,47 @@ function compressTo8(value) {
 }
 
 function imageSoften(imageData1, imageData2) {
-    r = Math.round((imageData2.r + imageData1.r) / 2);
-    g = Math.round((imageData2.g + imageData1.g) / 2);
-    b = Math.round((imageData2.b + imageData1.b) / 2);
-    return {r:r, g:g, b:b};
+    return {r:average(imageData1.r, imageData2.r),
+            g:average(imageData1.g, imageData2.g),
+            b:average(imageData1.b, imageData2.b)};
+}
+
+function average(value1, value2) {
+    return Math.round((value1 + value2) / 2)
 }
 
 function imageSharpen(imageData1, imageData2) {
-    dr = imageData2.r - imageData1.r;
-    dg = imageData2.g - imageData1.g;
-    db = imageData2.b - imageData1.b;
-    return {r:imageData1.r+dr*2, g:imageData1.g+dg*2, b:imageData1.b+db*2};
+    var index = 2;
+    return {r:imageData1.r + delta(imageData1.r, imageData2.r) * index,
+            g:imageData1.g + delta(imageData1.g, imageData2.g) * index,
+            b:imageData1.b + delta(imageData1.b, imageData2.b) * index};
 }
 
 function imageEdge(imageData1, imageData2) {
-    dr = imageData2.r - imageData1.r;
-    dg = imageData2.g - imageData1.g;
-    db = imageData2.b - imageData1.b;
-    return {r:127+dr, g:127+dg, b:127+db};
+    var base = 127;
+    return {r:base + delta(imageData1.r, imageData2.r),
+            g:base + delta(imageData1.g, imageData2.g),
+            b:base + delta(imageData1.b, imageData2.b)};
 }
 
+function imageEdgeBnW(imageData1, imageData2) {
+    var baseValue = 50;
+    return {r:blackAndWhite(delta(imageData1.r, imageData2.r), baseValue),
+            g:blackAndWhite(delta(imageData1.g, imageData2.g), baseValue),
+            b:blackAndWhite(delta(imageData1.b, imageData2.b), baseValue)};
+}
+
+function delta(value1, value2) {
+    return value2 - value1;
+}
+
+function blackAndWhite(value, baseValue) {
+    if (Math.abs(value) > baseValue) {
+        return 255;
+    } else {
+        return 0;
+    }
+}
 
 function imageMedianFilter(imageDatas) {
     var temp = convertRgbToArray(imageDatas);
