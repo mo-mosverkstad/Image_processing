@@ -15,6 +15,12 @@ function imageGray(imageData) {
     return {r:gray, g:gray, b:gray};
 }
 
+function imageInverted(imageData) {
+    return {r:255-imageData.r,
+            g:255-imageData.g,
+            b:255-imageData.b};
+}
+
 function imageSqrt(imageData) {
     return {r:sqrt(imageData.r), g:sqrt(imageData.g), b:sqrt(imageData.b)};
 }
@@ -44,7 +50,7 @@ function average(value1, value2) {
 }
 
 function imageSharpen(imageData1, imageData2) {
-    var index = 2;
+    var index = 50;
     return {r:imageData1.r + delta(imageData1.r, imageData2.r) * index,
             g:imageData1.g + delta(imageData1.g, imageData2.g) * index,
             b:imageData1.b + delta(imageData1.b, imageData2.b) * index};
@@ -58,7 +64,7 @@ function imageEdge(imageData1, imageData2) {
 }
 
 function imageEdgeBnW(imageData1, imageData2) {
-    var baseValue = 50;
+    var baseValue = 60;
     return {r:blackAndWhite(delta(imageData1.r, imageData2.r), baseValue),
             g:blackAndWhite(delta(imageData1.g, imageData2.g), baseValue),
             b:blackAndWhite(delta(imageData1.b, imageData2.b), baseValue)};

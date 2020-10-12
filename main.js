@@ -7,8 +7,8 @@ hiddenCanvas.style.display = 'none';
 var fileUpload = document.getElementById('fileUpload');
 var fileUploadRight = document.getElementById('fileUploadRight');
 
-var imageOrigData;
-var imageProcData;
+var imageOrigData = null;
+var imageProcData = null;
 
 var canvasPosition = new CanvasPosition(ctx);
 var imgOrignal = new Image();
@@ -51,6 +51,7 @@ fileUploadRight.onchange = readImageRight;
 
 
 function imageProcessGeneralFunction(ipFunc, func) {
+    if (imageOrigData == null) return;
     pos = canvasPosition.getImagePosition(1, 0);
     ipFunc(func, imageOrigData, pos);
     imageProcData = loadData(pos.x, pos.y, imgOrignal.naturalWidth, imgOrignal.naturalHeight);
@@ -62,6 +63,10 @@ function makeSqrt() {
 
 function grayScale() {
     imageProcessGeneralFunction(imageProcess, imageGray);
+}
+
+function invertedColor() {
+    imageProcessGeneralFunction(imageProcess, imageInverted);
 }
 
 function compress() {
@@ -97,6 +102,7 @@ function valueFilter() {
 
 
 function colorOrigScatter() {
+    if (imageOrigData == null) return;
     colorScatter(imageOrigData, 0);
 }
 
@@ -116,6 +122,7 @@ function colorScatter(data, x) {
 
 
 function colorOrigAnalysis() {
+    if (imageOrigData == null) return;
     var histogramArray = statisData(imageOrigData);
     showHistogram(0, histogramArray);
 }
@@ -130,6 +137,8 @@ function colorProcAnalysis() {
 
 
 function generateOutputImg() {
+    if (imageOrigData == null || imageProcData == null) return;
+    
     var pos = canvasPosition.getImagePosition(1, 0);
     var x = pos.x;
     var y = pos.y;
