@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+}
+html, body {
+    width: 100%;
+}
+.container, .container2, .container3, .container4 {
+    width: 100%
+}
+button {
+    width: 20%;
+}
+}
+</style>
+</head>
+<body>
+
+<p>Fourier transform</p>
+<div class="container">
+    <input type='file' id="fileUpload" style="width: 51.2%"/>
+    <button onclick="testFft()">Fourier transform</button>
+    <button onclick="testFftCenter()">Fourier transform, display from center</button>
+</div>
+<canvas id="imageProcessCanvas" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script src="frameworkPosition.js"></script>
+<script src="frameworkDrawings.js"></script>
+<script src="frameworkFourier.js"></script>
+<script src="mainFourier.js"></script>
+
+
+
+</body>
+</html>

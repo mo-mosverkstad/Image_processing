@@ -25,6 +25,12 @@ class CanvasPosition {
         this.setCanvasSize();
     }
     
+    sethistogramSize(histogramWidth, histogramHeight) {
+        this.histogramSize.w = histogramWidth;
+        this.histogramSize.h = histogramHeight;
+        this.setCanvasSize();
+    }
+    
     setCanvasSize() {
         this.canvasSize.w = (this.imageSize.w + this.histogramSize.w) * this.imagesPerRow + this.border * (this.imagesPerRow + 1);
         this.canvasSize.h = (Math.max(this.imageSize.h, this.histogramSize.h) + this.border) * this.imagesPerColumn;
